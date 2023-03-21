@@ -17,14 +17,12 @@ def add(request):
         post_url = requests.post(
             'http://coderashapi.mywebcommunity.org/data_add.php', data=params)
         response = post_url.json()
-        print(response, type(response))
-    return render(request,'api_test_add.html', response)
+        context={"message":response['message']}
+    return render(request,'api_test_add.html', context)
 @csrf_exempt
 def fetch(request):
     post_url = requests.get(
         'http://coderashapi.mywebcommunity.org/data_fetch.php')
     response = post_url.json()
-    message = response["message"]
-    records = {"data": response['data']}
-
-    return render(request,'api_test_fetch.html', records)
+    context={"message":response["message"],"data":response['data']}
+    return render(request,'api_test_fetch.html', context)
